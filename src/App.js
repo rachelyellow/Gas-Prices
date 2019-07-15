@@ -1,26 +1,61 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import axios from 'axios';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+class App extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      gasPrices: [],
+      currentPrices: {}
+    };
+    this.refreshData = this.refreshData.bind(this);
+  }
+
+  componentDidMount() {
+    setInterval(() =>     axios.get('https://api.blockcypher.com/v1/eth/main')
+    .then(response => {
+      this.setState({
+        gasPrices: this.sortValues(this.state.gasPrices.concat(response.data))
+      })
+    })
+    .catch(function(error) {
+      console.log(error)
+    }), 30000)
+  }
+
+  sortValues(arr) {
+    return arr.sort((a, b) => b.time - a.time)
+  }
+
+  refreshData() {
+    axios.get('https://api.blockcypher.com/v1/eth/main')
+    .then(response => {
+      this.setState({
+        gasPrices: this.state.gasPrices.concat(response.data)
+      })
+    })
+    .catch(function(error) {
+      console.log(error)
+    })
+  }
+
+  render () {
+    return (
+      <div className="App">
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          <button onClick={this.refreshData} >Get Latest Prices</button>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+        {this.state.gasPrices.map((item, index) =>
+          <p 
+            key={index}
+            onKeyDown={console.log(item)} >
+            Time: {Date.parse(item.time)} ___ High: {item.high_gas_price} | Medium: {item.medium_gas_price} | Low: {item.low_gas_price} | Hash: <a href={item.latest_url}>{item.hash}</a>
+          </p>)}
+      </div>
+    );
+  }
 }
 
 export default App;
