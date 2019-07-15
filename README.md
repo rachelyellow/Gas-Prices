@@ -1,3 +1,5 @@
+# Gas Prices
+
 ## Getting Started
 run `npm i` to install all dependencies.
 run `npm start` to start the app.

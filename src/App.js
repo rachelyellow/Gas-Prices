@@ -7,8 +7,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      gasPrices: [],
-      currentPrices: {}
+      gasPrices: []
     };
     this.refreshData = this.refreshData.bind(this);
   }
@@ -22,7 +21,7 @@ class App extends Component {
     })
     .catch(function(error) {
       console.log(error)
-    }), 30000)
+    }), 45000)
   }
 
   sortValues(arr) {
@@ -47,15 +46,31 @@ class App extends Component {
         <p>
           <button onClick={this.refreshData} >Get Latest Prices</button>
         </p>
-        {this.state.gasPrices.map((item, index) =>
-          <p 
-            key={index}
-            onKeyDown={console.log(item)} >
-            Time: {Date.parse(item.time)} ___ High: {item.high_gas_price} | Medium: {item.medium_gas_price} | Low: {item.low_gas_price} | Hash: <a href={item.latest_url}>{item.hash}</a>
-          </p>)}
+        <table>
+          <tbody>
+            <tr>
+              <th>Time</th>
+              <th>High</th> 
+              <th>Medium</th> 
+              <th>Low</th>
+              <th>Hash</th>
+            </tr>
+          {this.state.gasPrices.map((item, index) =>
+            <tr 
+              key={index}
+              onClick={console.log(item.time.toUTCString())} >
+                <td>{item.time}</td>
+                <td>{item.high_gas_price}</td>
+                <td>{item.medium_gas_price}</td>
+                <td>{item.low_gas_price}</td>
+                <td><a href={item.latest_url}>{item.hash}</a></td>
+            </tr>)}
+          </tbody>
+        </table>
       </div>
     );
   }
 }
+
 
 export default App;
