@@ -13,27 +13,21 @@ class App extends Component {
   }
 
   componentDidMount() {
-    setInterval(() =>     axios.get('https://api.blockcypher.com/v1/eth/main')
+    setInterval(() => axios.get('https://api.blockcypher.com/v1/eth/main')
     .then(response => {
       this.setState({
-        gasPrices: this.sortValues(this.state.gasPrices.concat(response.data))
+        gasPrices: this.state.gasPrices.concat(response.data)
       })
     })
     .catch(function(error) {
       console.log(error)
-    }), 45000)
-  }
-
-  sortValues(arr) {
-    return arr.sort((a, b) => b.time - a.time)
+    }), 30000)
   }
 
   refreshData() {
     axios.get('https://api.blockcypher.com/v1/eth/main')
     .then(response => {
-      this.setState({
-        gasPrices: this.state.gasPrices.concat(response.data)
-      })
+        this.setState({ gasPrices: this.state.gasPrices.concat(response.data) })
     })
     .catch(function(error) {
       console.log(error)
@@ -58,8 +52,8 @@ class App extends Component {
           {this.state.gasPrices.map((item, index) =>
             <tr 
               key={index}
-              onClick={console.log(item.time.toUTCString())} >
-                <td>{item.time}</td>
+              onClick={() => console.log(item)} >
+                <td>{new Date(item.time).toString()}</td>
                 <td>{item.high_gas_price}</td>
                 <td>{item.medium_gas_price}</td>
                 <td>{item.low_gas_price}</td>

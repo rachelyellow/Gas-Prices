@@ -2,9 +2,23 @@
   text-align: center;
 }
 
+td {
+  cursor: pointer;
+  padding: .5em;
+}
+
 table {
   width: 90%;
-  padding: 2px;
+  padding: 1em;
+  background-color: white;
   border: 1px solid black;
   margin: 1em auto;
+}
+
+button {
+  padding: 5px;
+  font: 400;
+  border: 1px solid black;
+  border-radius: .5em;
+  cursor: pointer;
 }
