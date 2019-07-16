@@ -28,7 +28,11 @@ class App extends Component {
   refreshData() {
     axios.get('https://api.blockcypher.com/v1/eth/main')
     .then(response => {
+      if (this.state.gasPrices[this.state.gasPrices.length - 1].hash === response.data.hash) {
+        alert('Prices already up to date!');
+      } else {
         this.setState({ gasPrices: this.state.gasPrices.concat(response.data) }, this.addToLocalStorage(this.state.gasPrices));
+      }
     })
     .catch(function(error) {
       console.log(error)
