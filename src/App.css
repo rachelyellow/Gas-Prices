@@ -22,3 +22,15 @@ button {
   border-radius: .5em;
   cursor: pointer;
 }
+
+img {
+  width: 1em;
+}
+
+.outline {
+  opacity: 20%;
+}
+
+.outline {
+  opacity: 100%;
+}
