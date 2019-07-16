@@ -3,6 +3,7 @@ import Entry from './Entry.js';
 import './App.css';
 import axios from 'axios';
 
+
 class App extends Component {
 
   constructor() {
@@ -12,37 +13,51 @@ class App extends Component {
     };
     this.refreshData = this.refreshData.bind(this);
     this.deleteEntry = this.deleteEntry.bind(this);
+    this.fetchFromLocalStorage = this.fetchFromLocalStorage.bind(this);
   }
 
   componentDidMount() {
-    this.refreshData();
-    setInterval(() => this.refreshData(), 60000)
+    if (window.localStorage.getItem('gasPrices')) {
+      this.fetchFromLocalStorage();
+    } else {
+      this.refreshData();
+    }
+    setInterval(() => this.refreshData(), 60000);
   }
 
   refreshData() {
     axios.get('https://api.blockcypher.com/v1/eth/main')
     .then(response => {
-        this.setState({ gasPrices: this.state.gasPrices.concat(response.data) }, () => console.log(this.state))
+        this.setState({ gasPrices: this.state.gasPrices.concat(response.data) }, this.addToLocalStorage(this.state.gasPrices));
     })
     .catch(function(error) {
       console.log(error)
     })
   }
 
-  deleteEntry(entry) {
-    const filtered = this.state.gasPrices.filter(price => price !== entry);
-    this.setState({ gasPrices: filtered });
+  addToLocalStorage(gasPrices) {
+    window.localStorage.setItem('gasPrices', JSON.stringify(gasPrices));
   }
 
-  render () {
+  fetchFromLocalStorage() {
+    this.setState({ gasPrices: JSON.parse(window.localStorage.getItem('gasPrices')) })
+  }
+
+  deleteEntry(entry) {
+    const filtered = this.state.gasPrices.filter(price => price !== entry);
+    this.setState({ gasPrices: filtered }, this.addToLocalStorage(this.state.gasPrices));
+  }
+
+  render() {
     return (
       <div className="App">
-        <h6>
+        <div id='banner'>
+          <h1>Gas Checker</h1>
           <button onClick={this.refreshData} >Get Latest Prices</button>
-        </h6>
+        </div>
         <table>
           <tbody>
-            <tr>
+            <tr id='table-header'>
               <th></th>
               <th>Time</th>
               <th>High</th> 

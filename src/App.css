@@ -2,36 +2,70 @@
   text-align: center;
 }
 
+#banner {
+  position: fixed;
+  background: black;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  height: 120px;
+  width: 100%;
+}
+
+h1 {
+  font-size: 5rem;
+  color: white;
+  position: fixed;
+  left: 1em;
+  padding-right: 4%;
+  font-weight: 600;
+}
+
 td {
   cursor: pointer;
   padding: .5em;
 }
+
+.table-header {
+  position: fixed;
+  z-index: 10000;
+  top: 120px;
+  height: 50px;
+}
+
+/* tr.table-row {
+  border: 1px solid black;
+} */
 
 table {
   width: 90%;
   padding: 1em;
   background-color: white;
   border: 1px solid black;
-  margin: 1em auto;
+  margin: 120px auto;
 }
 
 button {
   padding: 5px;
-  margin: 2em;
-  font-weight: 200;
+  margin-top: 1.3em;
+  right: 1em;
+  font-size: 2rem;
+  color: white;
   border: 1px solid black;
+  background-color: rgb(113, 160, 43);
   border-radius: .5em;
   cursor: pointer;
 }
 
-img {
-  width: 1em;
+button:focus {
+  outline: 0;
 }
 
-.outline {
+img {
+  width: 1em;
   opacity: 20%;
 }
 
-.outline {
+img:hover {
   opacity: 100%;
 }

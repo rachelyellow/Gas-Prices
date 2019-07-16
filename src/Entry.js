@@ -29,9 +29,9 @@ class Entry extends Component {
     this.props.deleteEntry(element);
   }
 
-  render () {
+  render() {
     return (
-      <tr>
+      <tr className='table-row'>
         <td><img src={this.state.starred ? like : outline} alt='' onClick={this.toggleStar}></img></td>
         <td onClick={this.logData}>{new Date(this.props.data.time).toString()}</td>
         <td onClick={this.logData}>{this.props.data.high_gas_price}</td>
