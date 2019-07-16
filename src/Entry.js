@@ -25,6 +25,10 @@ class Entry extends Component {
     console.log(this.props.data)
   }
 
+  removeElement(element) {
+    this.props.deleteEntry(element);
+  }
+
   render () {
     return (
       <tr>
@@ -34,6 +38,7 @@ class Entry extends Component {
         <td onClick={this.logData}>{this.props.data.medium_gas_price}</td>
         <td onClick={this.logData}>{this.props.data.low_gas_price}</td>
         <td onClick={this.logData}><a href={this.props.data.latest_url}>{this.props.data.hash}</a></td>
+        <td onClick={this.removeElement.bind(this, this.props.data)}><i className="fa fa-trash"></i></td>
       </tr>
     );
   }

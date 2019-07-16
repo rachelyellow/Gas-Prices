@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Entry from './Entry.js';
-import like from './img/color-heart.png';
 import './App.css';
 import axios from 'axios';
 
@@ -30,25 +29,27 @@ class App extends Component {
     })
   }
 
-  deleteEntry() {
-    console.log('delete entry');
+  deleteEntry(entry) {
+    const filtered = this.state.gasPrices.filter(price => price !== entry);
+    this.setState({ gasPrices: filtered });
   }
 
   render () {
     return (
       <div className="App">
-        <h1>
+        <h6>
           <button onClick={this.refreshData} >Get Latest Prices</button>
-        </h1>
+        </h6>
         <table>
           <tbody>
             <tr>
-              <th><img src={like} alt=''></img></th>
+              <th></th>
               <th>Time</th>
               <th>High</th> 
               <th>Medium</th> 
               <th>Low</th>
               <th>Hash</th>
+              <th></th>
             </tr>
           {this.state.gasPrices.map((item, index) =>
             <Entry 
