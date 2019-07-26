@@ -6,6 +6,14 @@ import axios from 'axios';
 
 class App extends Component {
 
+  // TO DO:
+  // alert popup only when clicked
+  // add functionality to sort by most recent
+  // sticky table header
+  // make favourites stay on refresh
+  // highlight most recent
+  // add charts(?)
+
   constructor() {
     super();
     this.state = {
