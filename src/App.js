@@ -26,10 +26,12 @@ class App extends Component {
   }
 
   refreshData() {
-    axios.get('https://api.blockcypher.com/v1/eth/main')
+    axios.get('https://cors-anywhere.herokuapp.com/https://api.blockcypher.com/v1/eth/main')
     .then(response => {
-      if (this.state.gasPrices[this.state.gasPrices.length - 1].hash === response.data.hash) {
+      if (!this.state.gasPrices[0] === null && this.state.gasPrices[this.state.gasPrices.length - 1].hash === response.data.hash) {
         alert('Prices already up to date!');
+      } else if (this.state.gasPrices[0] === null) {
+        this.setState({ gasPrices: [response.data] }, this.addToLocalStorage(this.state.gasPrices))
       } else {
         this.setState({ gasPrices: this.state.gasPrices.concat(response.data) }, this.addToLocalStorage(this.state.gasPrices));
       }
@@ -49,7 +51,7 @@ class App extends Component {
 
   deleteEntry(entry) {
     const filtered = this.state.gasPrices.filter(price => price !== entry);
-    this.setState({ gasPrices: filtered }, this.addToLocalStorage(this.state.gasPrices));
+    this.setState({ gasPrices: filtered }, this.addToLocalStorage(filtered));
   }
 
   render() {
@@ -75,7 +77,7 @@ class App extends Component {
               key={index}
               data={item}
               deleteEntry={this.deleteEntry}
-              />)}
+            />)}
           </tbody>
         </table>
       </div>
