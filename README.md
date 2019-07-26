@@ -6,7 +6,7 @@ Gas Checker provides live estimates for the gas prices used to complete transact
 
 ## Final Product
 
-![finalProduct](./src/12.34.56 AM.png)
+![finalProduct](./src/img/GasChecker.png)
 
 
 ## Getting Started
